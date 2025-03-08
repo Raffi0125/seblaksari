@@ -1,8 +1,6 @@
 <?php
 
-
 $koneksi = mysqli_connect("localhost", "root", "", "pwl_kasir_restoran");
-
 
 // Funtion Register
 
@@ -48,9 +46,9 @@ function register_akun()
 
 
 
-    mysqli_query($koneksi, "INSERT INTO `user`
+    mysqli_query($koneksi, "INSERT INTO `user` (`username`, `password`)
 
-                            VALUES ('', '$username', '$password')
+                            VALUES ('$username', '$password')
 
     ");
 
@@ -93,35 +91,70 @@ function login_akun()
 
 
 
-    if ($cek_akun_admin == null && $cek_akun_user == null) return false;
+$cek_akun_user = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT * FROM `user` WHERE username = '$username' AND `password` = '$password'"));
 
-    if ($cek_akun_user != null) {
+if ($cek_akun_admin == null && $cek_akun_user == null) {
+    return false;
+}
 
-        $_SESSION["akun-user"] = [
+if ($cek_akun_user != null) {
+    $_SESSION["akun-user"] = [
+        "username" => $username,
+        "password" => $password,
+        "username" => $cek_akun_user['username'] // Ensure the 'nama' field exists in your 'user' table
+    ];
+}
 
-            "username" => $username,
+if ($cek_akun_admin != null) {
+    $_SESSION["akun-admin"] = [
+        "username" => $username,
+        "password" => $password
+    ];
+}
 
-            "password" => $password
-
-        ];
-    }
-    if ($cek_akun_admin != null) {
-
-        $_SESSION["akun-admin"] = [
-
-            "username" => $username,
-
-            "password" => $password
-
-        ];
-    }
-
-    header("Location: index.php");
+    header("Location: dashboard.php");
 
     exit;
 }
 
+// Function to Change Password
+// Function to Change Password
+function change_password() {
+    global $koneksi;
 
+    // Ambil username dari session
+    $username = $_SESSION['akun-user']['username'] ?? $_SESSION['akun-admin']['username'];
+    $current_password = md5(htmlspecialchars($_POST["current_password"]));
+    $new_password = md5(htmlspecialchars($_POST["new_password"]));
+    $confirm_password = md5(htmlspecialchars($_POST["confirm_password"]));
+
+    // Cek apakah pengguna adalah admin atau user
+    $table = isset($_SESSION['akun-admin']) ? 'admin' : 'user';
+
+    // Check if the current password is correct
+    $cek_akun = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT * FROM $table WHERE username = '$username' AND password = '$current_password'"));
+
+    if ($cek_akun == null) {
+        echo "<script>alert('Current password is incorrect!');</script>";
+        return -1;
+    }
+
+    // Check if new password and confirm password match
+    if ($new_password != $confirm_password) {
+        echo "<script>alert('New password and confirm password do not match!');</script>";
+        return -1;
+    }
+
+    // Check if the new password is the same as the current password
+    if ($current_password == $new_password) {
+        echo "<script>alert('New password cannot be the same as the current password!');</script>";
+        return -1;
+    }
+
+    // Update the password
+    mysqli_query($koneksi, "UPDATE $table SET password = '$new_password' WHERE username = '$username'");
+    return mysqli_affected_rows($koneksi);
+}
 
 // Function Select Data
 
@@ -354,7 +387,7 @@ function tambah_data_pesanan()
 
     // Nama Pelanggan
 
-    $pelanggan = htmlspecialchars($_POST["pelanggan"]);
+    $pelanggan = $_SESSION['akun-user']['username'];
 
     // Generate Kode Pesanan
 
@@ -399,9 +432,9 @@ function tambah_data_pesanan()
 
         $qty = $lp["qty"];
 
-        mysqli_query($koneksi, "INSERT INTO pesanan
+         mysqli_query($koneksi, "INSERT INTO pesanan (kode_pesanan, kode_menu, qty)
 
-                                VALUES ('', '$kode_pesanan', '$kode_menu', $qty);
+                                VALUES ('$kode_pesanan', '$kode_menu', $qty);
 
         ");
     }
@@ -410,9 +443,9 @@ function tambah_data_pesanan()
 
     // Tambah Data Transaksi
 
-    mysqli_query($koneksi, "INSERT INTO transaksi
+	mysqli_query($koneksi, "INSERT INTO transaksi (kode_pesanan, nama_pelanggan, waktu)
 
-                            VALUES ('', '$kode_pesanan', '$pelanggan', NOW())
+                            VALUES ('$kode_pesanan', '$pelanggan', NOW())
 
     ");
 

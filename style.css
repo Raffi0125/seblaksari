@@ -2154,3 +2154,26 @@ form#contact button:hover {
         padding: 20px;
     }
 }
+
+#dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Memastikan konten diatur dengan baik */
+}
+
+.card {
+    height: 100%; /* Memastikan semua kartu memiliki tinggi yang sama */
+    display: flex;
+    flex-direction: column; /* Mengatur arah konten dalam kartu */
+}
+
+.card-body {
+    flex: 1; /* Memungkinkan konten untuk mengisi ruang yang tersedia */
+    display: flex;
+    flex-direction: column; /* Mengatur arah konten dalam body kartu */
+    justify-content: space-between; /* Menyebar konten secara merata */
+}
+
+.table {
+    margin-bottom: 0; /* Menghilangkan margin bawah pada tabel */
+}

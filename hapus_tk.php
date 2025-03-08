@@ -8,7 +8,7 @@ if (!isset($_SESSION["akun-admin"])) {
     if (isset($_SESSION["akun-user"])) {
     	echo "<script>
             alert('Hapus data hanya berlaku untuk admin!');
-            location.href = 'dashboard.php';
+            location.href = 'dashboard.php?transaksi';
         </script>";
         exit;
     } else {
@@ -29,7 +29,7 @@ echo $hapus > 0
 
     alert('Data berhasil dihapus!');
 
-    location.href = 'dashboard.php';
+    location.href = 'dashboard.php?transaksi';
 
 </script>" 
 
@@ -37,6 +37,6 @@ echo $hapus > 0
 
     alert('Data gagal dihapus!');
 
-    location.href = 'dashboard.php';
+    location.href = 'dashboard.php?transaksi';
 
 </script>";

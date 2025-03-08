@@ -53,7 +53,7 @@
 
                     <button class="btn btn-primary">Cetak</button>
 
-                    <a class="btn btn-danger" href="hapus.php?kode_pesanan=<?= $m["kode_pesanan"]; ?>" onclick="return confirm('Hapus Data Transaksi?')">Hapus</a>
+                    <a class="btn btn-danger" href="hapus_tk.php?kode_pesanan=<?= $m["kode_pesanan"]; ?>" onclick="return confirm('Hapus Data Transaksi?')">Hapus</a>
 
                 </td>
 

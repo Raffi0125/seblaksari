@@ -8,7 +8,7 @@ if (!isset($_SESSION["akun-admin"])) {
     if (isset($_SESSION["akun-user"])) {
         echo "<script>
             alert('Edit data hanya berlaku untuk admin!');
-            location.href = 'index.php';
+            location.href = 'dashboard.php';
         </script>";
         exit;
     } else {
@@ -29,7 +29,7 @@ if (isset($_POST["edit"])) {
 
                 alert('Data berhasil diubah!');
 
-                location.href = 'index.php';
+                location.href = 'dashboard.php';
 
             </script>";
 
@@ -39,7 +39,7 @@ if (isset($_POST["edit"])) {
 
                 alert('Data tidak ada yang diubah!');
 
-                location.href = 'index.php';
+                location.href = 'dashboard.php';
 
             </script>";
 
@@ -49,7 +49,7 @@ if (isset($_POST["edit"])) {
 
                 alert('Data gagal diubah!');
 
-                location.href = 'index.php';
+                location.href = 'dashboard.php';
 
             </script>";
 

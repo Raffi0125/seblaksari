@@ -4,7 +4,7 @@
 
     <nav class="navbar navbar-light">
 
-        <form action="index.php" method="GET" class="form-inline d-flex">
+        <form action="dashboard.php" method="GET" class="form-inline d-flex">
 
             <input class="form-control mx-sm-2" type="search" autocomplete="off" name="key-search" placeholder="Cari..">
 
@@ -27,15 +27,16 @@
 </div>
 
 <!-- Pemesanan -->
-
-<form action="index.php" method="POST">
-
+<form action="dashboard.php" method="POST">
     <div class="d-flex">
-
-        <input class="form-control mx-sm-2 my-2 w-auto" type="text" name="pelanggan" placeholder="Nama Pelanggan" required autocomplete="off">
-
+        <input class="form-control mx-sm-2 my-2 w-auto" 
+               type="text" 
+               name="pelanggan" 
+               placeholder="Nama Pelanggan" 
+               value="<?= isset($_SESSION['akun-user']) ? $_SESSION['akun-user']['username'] : ''; ?>" 
+               required autocomplete="off" 
+               readonly>
         <button class="btn btn-success my-2 mx-2" name="pesan">Pesan</button>
-
     </div>
 
 <!-- Menu Masakan -->

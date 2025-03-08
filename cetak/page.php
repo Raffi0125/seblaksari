@@ -1,5 +1,6 @@
 <?php 
 require_once "../function.php";
+date_default_timezone_set("Asia/Jakarta"); // WIB (Waktu Indonesia Barat)
 
 $kode = $_GET["kode_pesanan"];
 $menu = ambil_data("SELECT DISTINCT * FROM pesanan 
@@ -42,7 +43,7 @@ $menu = ambil_data("SELECT DISTINCT * FROM pesanan
         <tr>
             <td>Waktu</td>
             <td>:</td>
-            <td><?= $menu[0]["waktu"]; ?></td>
+            <td><?= date("d-m-Y H:i:s"); ?></td>
         </tr>
     </table><br>
     <table class="daftar-pesanan" cellpadding="5">

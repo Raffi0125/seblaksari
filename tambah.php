@@ -8,7 +8,7 @@ if (!isset($_SESSION["akun-admin"])) {
     if (isset($_SESSION["akun-user"])) {
         echo "<script>
             alert('Tambah data hanya berlaku untuk admin!');
-            location.href = 'index.php';
+            location.href = 'dashboard.php';
         </script>";
     } else {
         header("Location: login.php");
@@ -28,7 +28,7 @@ if (isset($_POST["tambah"])) {
 
         alert('Data berhasil ditambah!');
 
-        location.href = 'index.php';
+        location.href = 'dashboard.php';
 
     </script>"
 
@@ -36,7 +36,7 @@ if (isset($_POST["tambah"])) {
 
         alert('Data gagal ditambah!');
 
-        location.href = 'index.php';
+        location.href = 'dashboard.php';
 
     </script>";
 
